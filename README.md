@@ -43,8 +43,8 @@ A comprehensive web application for managing event planning services, bookings, 
    ```
 3. Set up your environment variables in a `.env` file:
    ```env
-   PORT=5558
-   MONGODB_URI=mongodb://localhost:27017/booking_system
+   PORT=****
+   MONGODB_URI=mongodb://localhost:27017/****
    ```
 
 ### Running the App
