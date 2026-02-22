@@ -1,0 +1,159 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0.511);
+    color: #333;
+    background-image: url('E:/Semester 4/Web App Dev/images_project/shine 2.JPG');
+    background-size: cover; 
+    background-position: center;
+}
+
+header {
+    background-color: #ffffff98;
+    color:  rgba(255, 255, 255, 0.511);
+    padding: 20px;
+}
+
+.logo {
+    float: left;
+}
+
+.navbar {
+    float: left;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar ul li {
+    margin-left: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: rgb(7, 89, 37);
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 1.6cm;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a:focus {
+    color: #ff96d8;
+    transform: translateY(-2px);
+}
+
+.search-bar {
+    float: right;
+    position: relative;
+    background-color: #ffffff43;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border: none;
+    outline: none;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.search-bar button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: white;
+}
+
+#intro {
+
+    text-align: center;
+    padding: 50px 20px;
+    background: rgba(255, 255, 255, 0.6);
+    color: rgb(7, 89, 37);}
+
+#services {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.service {
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.service:hover {
+    transform: translateY(-5px);
+}
+
+#testimonials {
+    background-color: #f7f7f7;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.testimonial {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+}
+
+#contact {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#contact form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#contact input,
+#contact textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#contact button {
+    padding: 10px;
+    border: none;
+    background-color: #105c23f7;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#contact button:hover {
+    background-color: #ff96d8;
+}
+
+footer {
+    background-color: #105c23f7;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

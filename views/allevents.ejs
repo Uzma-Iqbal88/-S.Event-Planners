@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Events</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home2.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">All Events</h1>
+        <div class="row">
+            <% events.forEach(event => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= event.eventType %></h5>
+                            <ul>
+                               <li><strong>Date:</strong> <%= new Date(event.date).toLocaleDateString() %></li> 
+                                <li><strong>Number of Guests:</strong> <%= event.guests %></li>
+                                <li><strong>Time Slot:</strong> <%= event.timeSlot %></li> 
+                                <li><strong>Number of Events:</strong> <%= event.events %></li>
+                                <li><strong>Message:</strong> <%= event.message %></li> 
+                                <li>
+                                    <% if (event.userId) { %>
+                                        <strong>Username:</strong> <%= event.userId.username %><br>
+                                    <% } else { %>
+                                        <strong>Username:</strong> Unknown<br>
+                                    <% } %>
+                                </li>
+                            </ul>
+                            <% if (user.role === 'admin') { %>
+                                <form action="/events/<%= event._id %>?_method=DELETE" method="POST" class="mt-2">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

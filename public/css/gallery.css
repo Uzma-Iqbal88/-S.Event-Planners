@@ -1,0 +1,85 @@
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-image: url("/images/shine 2.JPG");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5.5cm;
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(255, 255, 255, 0.468);
+  padding-top: 0.3cm; /* Padding at the top */
+  z-index: 1; /* Ensure it appears above other elements */
+}
+
+#back {
+  margin-top: 0.3cm;
+  margin-left: 0.3cm;
+}
+
+#weddimg, #bdayimg, #gathimg {
+  margin-top: -0.5cm; /* Decreased margin to reduce space */
+  border-radius: 20px;
+  margin-left: 0.5cm;
+}
+
+.sidebar h5 {
+  color: #105c23f7;
+  margin-left: 1.4cm; /* Align text with images */
+  margin-top: 0.2cm; /* Reduced margin above text */
+  margin-bottom: 0.2cm; /* Reduced margin below text */
+}
+
+h1 {
+  font-family: 'Times New Roman', Times, serif;
+  color: #105c23f7;
+}
+
+.wedding_images, .birthday-images, .gathering-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.1cm;
+  margin-left: 5.5cm;
+  margin-bottom: 10px;
+}
+
+.wedding_images {
+  margin-top: 2cm;
+}
+
+.birthday-images {
+  margin-top: -0.4cm;
+}
+
+.gathering-images {
+  margin-top: -0.4cm; /* Adjust margin-top to separate from previous section */
+}
+
+.wedding_images img, .birthday-images img, .gathering-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-left: 1cm;
+}
+
+.logo {
+  margin-top: 0cm;
+}
+
+.logobg {
+  position: absolute;
+  top: 6.2cm;
+  left: 14.9cm;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.696);
+  animation: fade-in 5s forwards;
+  z-index:-10;
+}

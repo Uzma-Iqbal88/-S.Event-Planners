@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <img id="back" src="/images/previous.png">
+    <div class="container">
+        <h1>Book Your Event Today!</h1>
+        <form id="booking-form" action="/submit-form" method="post"> 
+            <div class="form-group">
+                <label for="event-type">Event Type:</label>
+                <select id="event-type" name="eventType" required>
+                    <option value="">Select Event Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="birthday">Birthday Party</option>
+                    <option value="farewells">Farewells</option>
+                    <option value="gatherings">Gatherings</option>
+                    <option value="others">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time-slot">Preferred Time Slot:</label>
+                <select id="time-slot" name="timeSlot" required>
+                    <option value="">Select Time Slot</option>
+                    <option value="9am">9:00 AM</option>
+                    <option value="11am">11:00 AM</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="events">Number of Events:</label>
+                <input type="number" id="events" name="events" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Event Date:</label>
+                <input type="date" id="date" name="date" required>
+                <span id="date-error" style="color: red; display: none;">This date is already booked. Please choose another date.</span>
+            </div>
+            <div class="form-group">
+                <label for="guests">Number of Guests:</label>
+                <input type="number" id="guests" name="guests" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Additional Message (Optional):</label>
+                <textarea id="message" name="message" rows="4" placeholder="Write any additional details here..."></textarea>
+            </div>
+            <button id="Book" type="submit">Book Now!</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const dateInput = document.getElementById('date');
+    const dateError = document.getElementById('date-error');
+    const bookingForm = document.getElementById('booking-form');
+
+    dateInput.addEventListener('change', () => {
+        const date = dateInput.value;
+        if (date) {
+            fetch(`/check-date?date=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.booked) {
+                        dateError.style.display = 'block';
+                    } else {
+                        dateError.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
+    bookingForm.addEventListener('submit', (event) => {
+        if (dateError.style.display === 'block') {
+            event.preventDefault();
+        }
+    });
+});
+</script>

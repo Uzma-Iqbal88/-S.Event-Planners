@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reviews</title>
+  <link rel="stylesheet" href="/css/review.css">
+  <style>
+    /* Additional CSS styles can be added here if needed */
+    .testimonial1, .testimonial2 {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .testimonial1 img, .testimonial2 img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+    .delete-btn {
+      display: block;
+      margin: 10px auto;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <img id="back" src="/images/previous.png" alt="Back Button">
+  <br><br><br>
+  
+  <section id="review-list">
+    <!-- Reviews will be dynamically added here -->
+  </section>
+
+  <center>
+    <!-- Button to open the review form -->
+    <button id="openForm" onclick="openReviewForm()">Share your Reviews!</button>
+  </center>
+  <br><br>
+
+  <div class="bottomoverlay">
+    <center>
+      <p id="bottomtext">&copy; 2017 - 2024 - S.Event_Planners - All rights reserved.
+        <br><br>Powered by S.Event_Planner.pk</p>
+      <img style="height: 0.8cm; width: 0.82cm;" src="/images/yt2.PNG" alt="icon-image">
+      <img style="height: 0.7cm; width: 0.82cm;" src="/images/gmail.PNG" alt="icon-image">
+      <img style="height: 0.7cm; width: 0.7cm;" src="/images/fb2.PNG" alt="icon-image">
+      <img style="height: 0.7cm; width: 0.7cm;" src="/images/instagram.png" alt="icon-image">
+    </center>
+  </div>
+
+  <script>
+    // Function to open the review form
+    function openReviewForm() {
+      window.location.href = "/reviewform"; // Replace with the correct URL of your review form
+    }
+
+    document.getElementById('back').addEventListener('click', function() {
+      window.location.href = "/"; // Replace with the correct URL of your home page
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      let reviewList = document.getElementById('review-list');
+
+      function createReviewSection(review, index) {
+        let section = document.createElement('section');
+        section.classList.add('testimonial1');
+
+        let img = document.createElement('img');
+        img.src = review.photos[0];
+        img.alt = 'Event Photo';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        img.style.margin = '10px auto';
+
+        let p = document.createElement('p');
+        p.textContent = `Message: ${review.message}`;
+        p.style.marginLeft = '7cm';
+
+        let h4 = document.createElement('h4');
+        h4.textContent = review.name;
+        h4.style.marginLeft = '19cm';
+
+        let h3 = document.createElement('h3');
+        h3.textContent = review.eventType;
+        h3.style.textAlign = 'center';
+
+        let rating = document.createElement('p');
+        rating.textContent = `Rating: ${review.rating} stars`;
+        rating.style.marginLeft = '7cm';
+
+        let foodQuality = document.createElement('p');
+        foodQuality.textContent = `Food Quality: ${review.foodQuality}`;
+        foodQuality.style.marginLeft = '7cm';
+
+        let decorationQuality = document.createElement('p');
+        decorationQuality.textContent = `Decoration Quality: ${review.decorationQuality}`;
+        decorationQuality.style.marginLeft = '7cm';
+
+        // Create the delete button
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete Review';
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.addEventListener('click', function() {
+          deleteReview(index);
+        });
+
+        section.appendChild(img);
+        section.appendChild(h3);
+        section.appendChild(p);
+        section.appendChild(rating);
+        section.appendChild(foodQuality);
+        section.appendChild(decorationQuality);
+        section.appendChild(h4);
+        section.appendChild(deleteBtn);
+
+        return section;
+      }
+
+      function deleteReview(index) {
+        // Remove the review from localStorage
+        reviews.splice(index, 1);
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+        // Refresh the review list
+        renderReviews();
+      }
+
+      function renderReviews() {
+        reviewList.innerHTML = '';
+        reviews.forEach((review, index) => {
+          let reviewSection = createReviewSection(review, index);
+          reviewList.appendChild(reviewSection);
+        });
+      }
+
+      // Initial render of reviews
+      renderReviews();
+    });
+  </script>
+</body>
+</html>

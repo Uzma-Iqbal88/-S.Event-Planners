@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Review Form</title>
+  <link rel="stylesheet" href="/css/reviewsform.css">
+
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: aliceblue;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: #105c23f7;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <img id="previous" src="/images/previous.png" alt="back button">
+  <div class="container">
+    <h1>Share Your Reviews</h1>
+    <p>Tell us about your experience at S.Event_Planners</p>
+    <form id="review-form" action="/reviews" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="youremail@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="event-type">Event Type:</label>
+        <select id="event-type" name="event-type" required>
+          <option value="">Select Event Type</option>
+          <option value="wedding">Wedding</option>
+          <option value="birthday">Birthday Party</option>
+          <option value="Farewells">Farewells</option>
+          <option value="Gatherings">Gatherings</option>
+          <option value="others">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="staff_Responsiveness">Staff Responsiveness:</label>
+        <input type="radio" name="staff_Responsiveness" value="excellent">Excellent
+        <input type="radio" name="staff_Responsiveness" value="good"> Good
+        <input type="radio" name="staff_Responsiveness" value="average"> Average
+        <input type="radio" name="staff_Responsiveness" value="poor"> Poor
+      </div>
+      <div class="form-group">
+        <label for="cateringComments">Comments on Catering:</label>
+        <textarea id="cateringComments" name="cateringComments" rows="4" cols="50"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="decorationQuality">Decoration :</label>
+        <input type="radio" name="decorationQuality" value="excellent"> Excellent
+        <input type="radio" name="decorationQuality" value="good"> Good
+        <input type="radio" name="decorationQuality" value="average"> Average
+        <input type="radio" name="decorationQuality" value="poor"> Poor
+      </div>
+      <div class="form-group">
+        <label for="foodquality">Food Quality:</label>
+        <select id="foodquality" name="foodquality">
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="average">Average</option>
+          <option value="poor">Poor</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="photos">Upload Photos:</label>
+        <input type="file" id="photos" name="photos" accept="image/*" multiple>
+        <small id="file-upload-message" style="display: none; color: red;">Please upload at least one file.</small>
+      </div>
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <div class="star-rating" id="rating">
+          <label data-value="1">&#9733;</label>
+          <label data-value="2">&#9733;</label>
+          <label data-value="3">&#9733;</label>
+          <label data-value="4">&#9733;</label>
+          <label data-value="5">&#9733;</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Additional Message (Optional):</label>
+        <textarea id="message" name="message" rows="4" placeholder="Write any additional details here..."></textarea>
+      </div>
+      <button type="submit">Submit Review</button>
+    </form>
+    <div id="confirmation-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Thank you for your review! We appreciate your feedback :)</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll('.star-rating label');
+    let selectedRating = 0;
+    stars.forEach((star, idx) => {
+      star.addEventListener('click', () => {
+        selectedRating = idx + 1;
+        stars.forEach((s, i) => {
+          s.style.color = i <= idx ? 'gold' : '#ccc';
+        });
+      });
+    });
+
+    document.getElementById('review-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Collect review data
+      const review = {
+        name: document.getElementById('name').value,
+        eventType: document.getElementById('event-type').value,
+        staffResponsiveness: document.querySelector('input[name="staff_Responsiveness"]:checked').value,
+        cateringComments: document.getElementById('cateringComments').value,
+        decorationQuality: document.querySelector('input[name="decorationQuality"]:checked').value,
+        foodQuality: document.getElementById('foodquality').value,
+        rating: selectedRating,
+        message: document.getElementById('message').value,
+        photos: []
+      };
+
+      const files = document.getElementById('photos').files;
+      if (files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          review.photos.push(event.target.result);
+          if (review.photos.length === files.length) {
+            saveReview(review);
+          }
+        };
+        for (let i = 0; i < files.length; i++) {
+          reader.readAsDataURL(files[i]);
+        }
+      } else {
+        saveReview(review);
+      }
+    });
+
+    function saveReview(review) {
+      let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      reviews.push(review);
+      localStorage.setItem('reviews', JSON.stringify(reviews));
+
+      document.getElementById('confirmation-modal').style.display = 'block';
+    }
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('confirmation-modal').style.display = 'none';
+      window.location.href = '/review';
+    });
+
+    document.getElementById('previous').addEventListener('click', function() {
+      window.location.href = '/review';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="/css/events.css">
+    <style>
+        #backtohome{
+            margin-top: 1cm;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <a id="backtohome" href="/">
+        <img src="/images/previous.png" alt="Back to Home">
+    </a>
+    <h1>List of Events</h1>
+    <ul>
+        <% events.forEach(event => { %>
+            <li>
+                <strong>Event Type:</strong> <%= event.eventType %><br>
+                <strong>Date:</strong> <%= event.date.toLocaleDateString() %><br>
+                <strong>Guests:</strong> <%= event.guests %><br>
+                <strong>Message:</strong> <%= event.message %><br>
+                <a href="/events/<%= event._id %>/edit">Update Event</a>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
